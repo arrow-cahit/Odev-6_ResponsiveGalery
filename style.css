@@ -1,0 +1,123 @@
+/* --- TEMEL AYARLAR --- */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background-color: #f4f6f8;
+    color: #333;
+    line-height: 1.6;
+}
+
+.gallery-header {
+    text-align: center;
+    padding: 40px 20px 20px;
+}
+
+/* --- GRID CONTAINER YAPISI --- */
+.gallery-container {
+    display: grid;
+    /* auto-fit ve minmax kullanımı: Ekran küçüldükçe kartları alta atar, minimum 280px genişlik verir */
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 24px; /* Grid boşlukları */
+    padding: 20px;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+/* --- KART YAPISI VE STİLLERİ --- */
+.card {
+    background-color: #fff;
+    border-radius: 12px;
+    overflow: hidden; /* Köşelerden taşan resimleri kırpar */
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+    display: flex;
+    flex-direction: column;
+    /* Kart Hover Efekti İçin Geçiş (Transition) */
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    cursor: pointer;
+}
+
+/* Kart Hover Efekti */
+.card:hover {
+    transform: translateY(-8px);
+    box-shadow: 0 12px 20px rgba(0, 0, 0, 0.15);
+}
+
+.card-img {
+    width: 100%;
+    height: 220px;
+    object-fit: cover; /* Resmin bozulmadan alanı doldurmasını sağlar */
+    display: block;
+}
+
+.card-content {
+    padding: 20px;
+    flex-grow: 1; /* İçeriğin kartın alt kısmını doldurmasını sağlar */
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.card-title {
+    font-size: 1.25rem;
+    margin-bottom: 10px;
+    color: #1a1a1a;
+}
+
+.card-text {
+    font-size: 0.95rem;
+    color: #666;
+}
+
+/* --- RESPONSIVE TASARIM (MEDIA QUERIES) --- */
+
+/* Desktop: 1024px Üzeri */
+@media (min-width: 1025px) {
+    /* Büyük kart masaüstünde 2 sütun ve 2 satır kaplar */
+    .card-large {
+        grid-column: span 2;
+        grid-row: span 2;
+    }
+    
+    .card-large .card-img {
+        height: 100%; 
+        min-height: 350px;
+    }
+}
+
+/* Tablet: 768px - 1024px Arası */
+@media (min-width: 768px) and (max-width: 1024px) {
+    .gallery-container {
+        /* Tablette yan yana net 2 kart zorlaması (auto-fit yerine manuel kontrol istenirse) */
+        grid-template-columns: repeat(2, 1fr); 
+    }
+    
+    /* Büyük kart tablette sadece yanlamasına 2 sütun kaplasın, satır uzamasın */
+    .card-large {
+        grid-column: span 2;
+        grid-row: span 1;
+    }
+}
+
+/* Mobil: 640px ve Altı */
+@media (max-width: 640px) {
+    .gallery-container {
+        /* Mobilde kartlar alt alta tek sıra dizilir */
+        grid-template-columns: 1fr; 
+        gap: 16px;
+    }
+
+    /* Mobilde büyük kartın esprisi kalmaz, normal boyuta döner */
+    .card-large {
+        grid-column: span 1;
+        grid-row: span 1;
+    }
+    
+    .card-large .card-img {
+        height: 220px; /* Diğer resimlerle aynı boyuta döner */
+    }
+}
